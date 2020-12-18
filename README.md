@@ -1,6 +1,6 @@
-# Http Request
+# HTTP Screw
 
-> __HttpRequest__ - _это интерфейс пакета Guzzle, который упрощает создание запросов используя ООП_
+> __HTTP Screw__ - _это интерфейс пакета Guzzle, который упрощает создание запросов используя ООП_
 
 ![License](https://img.shields.io/packagist/l/codememory/http-screw?logo=License&style=plastic)
 ![Code Size](https://img.shields.io/github/languages/code-size/codememory1/Screw?color=%2304aef1&logo=Code%20size&style=plastic)
@@ -8,7 +8,7 @@
 
 # Установка
 ```
-composer require codememory/HttpRequest
+composer require codememory/http-screw
 ```
 
 # Документация
