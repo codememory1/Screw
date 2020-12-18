@@ -2,9 +2,9 @@
 
 > __HttpRequest__ - _это интерфейс пакета Guzzle, который упрощает создание запросов используя ООП_
 
-![License](https://img.shields.io/packagist/l/codememory/fastdb?color=green&style=plastic)
-![Code Size](https://img.shields.io/github/languages/code-size/codememory1/HttpRequest?color=%2304aef1&logo=Code%20size&style=plastic)
-![Packagist](https://img.shields.io/packagist/dt/codememory/fastdb.svg?maxAge=2592000&style=plastic)
+![License](https://img.shields.io/packagist/l/codememory/http-screw?logo=License&style=plastic)
+![Code Size](https://img.shields.io/github/languages/code-size/codememory1/Screw?color=%2304aef1&logo=Code%20size&style=plastic)
+![Packagist](https://img.shields.io/packagist/dt/codememory/http-screw.svg?maxAge=2592000&style=plastic)
 
 # Установка
 ```
