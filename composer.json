@@ -1,0 +1,32 @@
+{
+    "name": "codememory/screw",
+    "description": "Component for sending Http RequestAuthor",
+    "type": "library",
+    "keywords": [
+        "framework",
+        "http",
+        "rest",
+        "web service",
+        "curl",
+        "client",
+        "HTTP client",
+        "PSR-7",
+        "PSR-18",
+        "request"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Danil Kostyn",
+            "email": "kostynd1@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codememory\\Screw\\": "src/"
+        }
+    }
+}
