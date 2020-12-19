@@ -40,7 +40,7 @@ composer require codememory/http-screw
 - `response(): GuzzleResponse` Возрощает Response пакета Guzzle
 
 # <a name="list-options"></a>Опции и их компоненты
-### <a name="Redirect-Option"></a> Redirect
+### <a name="Redirect-Option"></a> Redirect <span style="color:#38bac7">HttpRequest::O_REDIRECT</span>
 - `redirect()` Разришение Перенаправлений
     - > _boolean_ **$performRedirects** (_default_: false)
 
@@ -50,15 +50,15 @@ composer require codememory/http-screw
 - `strictRedirect()` Строгие Перенаправления
     - > _boolean_ **$strictly** (_default_: false)
 
-- `passingHeadersInRedirect()` Разрешить добавление заголовка referer при обноружении перенаправления
+- `addRefererOnRedirect()` Разрешить добавление заголовка referer при обноружении перенаправления
     - > _boolean_ **$allowDispatch** (_default_: true)
 
 - `redirectHandler()` Обработчик при обнаружении перенаправления
     - > _object|callable_ **$allowDispatch** (_default_: null)
 
-- `allowProtocols()` Разришеные протоколы
+- `allowProtocols()` Добавить разрешенные протоколы
     - > _string_ **...$args** (_default_: [http, https])
-### <a name="Auth-Option"></a> Authorization
+### <a name="Auth-Option"></a> Authorization <span style="color:#38bac7">HttpRequest::O_AUTH</span>
 - `username()` Имя пользователя
     - > _string|integer_ **$username** (_default_: null)
 
@@ -74,7 +74,7 @@ composer require codememory/http-screw
 - `enable()` Включить аутификацию
     - > None (_default_: true(On))
 
-### <a name="Timeout-Option"></a> Timeout(сек)
+### <a name="Timeout-Option"></a> Timeout(сек) <span style="color:#38bac7">HttpRequest::O_TIMEOUT</span>
 - `connectionTime()` Время подключения к серверу
     - > _integer|float_ **$time** (_default_: 0)
 
@@ -84,7 +84,7 @@ composer require codememory/http-screw
 - `readTime()` Время использования при чтении потокового тела
   - > _integer|float_ **$time** (_default_: default_socket_timeout of php.ini)
 
-### <a name="SSL-Cert-Option"></a> SSL Cert
+### <a name="SSL-Cert-Option"></a> SSL Cert <span style="color:#38bac7">HttpRequest::O_SSL</span>
 - `certificate()` Путь к файлу, содержащему сертификат в формате PEM
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
@@ -93,7 +93,7 @@ composer require codememory/http-screw
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
 
-### <a name="Proxy-Option"></a> Proxy
+### <a name="Proxy-Option"></a> Proxy <span style="color:#38bac7">HttpRequest::O_PROXY</span>
 - `setProxy()` Добавить прокси с определенным протоколом
   - > _string_ **$proxy** (_default_: null) - URL-адрес прокси
   - > _string|null_ **$protocol** (_default_: None) - Протокол прокси
