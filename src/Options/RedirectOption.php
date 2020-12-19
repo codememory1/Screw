@@ -1,10 +1,10 @@
 <?php
 
-namespace System\Http\HttpRequest\Options;
+namespace Codememory\Screw\Options;
 
-use System\Http\HttpRequest\HttpRequest;
-use System\Http\HttpRequest\Interfaces\OptionInterface;
-use System\Http\HttpRequest\Response\Response;
+use Codememory\Screw\HttpRequest;
+use Codememory\Screw\Interfaces\OptionInterface;
+use Codememory\Screw\Response\Response;
 
 /**
  * Class OptionRedirect
@@ -18,22 +18,22 @@ class RedirectOption extends Invoke implements OptionInterface
     /**
      * @var bool|null
      */
-    private ?bool $redirect = null;
+    private $redirect = null;
 
     /**
      * @var int
      */
-    private int $numberRedirects = 5;
+    private $numberRedirects = 5;
 
     /**
      * @var bool
      */
-    private bool $strictRedirect = false;
+    private $strictRedirect = false;
 
     /**
      * @var bool
      */
-    private bool $referer = true;
+    private $referer = true;
 
     /**
      * @var callable|object
@@ -43,21 +43,16 @@ class RedirectOption extends Invoke implements OptionInterface
     /**
      * @var array
      */
-    private array $protocols = [
+    private $protocols = [
         'http', 'https'
     ];
-
-    /**
-     * @var array
-     */
-    private array $readyData = [];
 
     /**
      * @param bool $performRedirects
      *
      * @return object
      */
-    public function redirect(bool $performRedirects): object
+    public function redirect(bool $performRedirects): RedirectOption
     {
 
         $this->redirect = $performRedirects;
@@ -71,7 +66,7 @@ class RedirectOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function numberRedirects(int $redirects): object
+    public function numberRedirects(int $redirects): RedirectOption
     {
 
         $this->numberRedirects = $redirects;
@@ -85,7 +80,7 @@ class RedirectOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function strictRedirect(bool $strictly): object
+    public function strictRedirect(bool $strictly): RedirectOption
     {
 
         $this->strictRedirect = $strictly;
@@ -99,7 +94,7 @@ class RedirectOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function addRefererOnRedirect(bool $referer): object
+    public function addRefererOnRedirect(bool $referer): RedirectOption
     {
 
         $this->referer = $referer;
@@ -113,7 +108,7 @@ class RedirectOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function redirectHandler(callable|object $handler): object
+    public function redirectHandler($handler): RedirectOption
     {
 
         $this->handler = $handler;
@@ -127,7 +122,7 @@ class RedirectOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function allowProtocols(...$protocols): object
+    public function allowProtocols(...$protocols): RedirectOption
     {
 
         $this->protocols = $protocols;
@@ -145,23 +140,25 @@ class RedirectOption extends Invoke implements OptionInterface
     protected function call(HttpRequest $request, Response $response): array
     {
 
-        $this->readyData = [
+        $readyData = [
             'allow_redirects' => []
         ];
 
         if ($this->redirect !== null) {
-            $this->readyData['allow_redirects'] = $this->redirect;
+            $readyData['allow_redirects'] = $this->redirect;
         } else {
-            $this->readyData['allow_redirects'] = [
+            $readyData['allow_redirects'] = [
                 'max'         => $this->numberRedirects,
                 'strict'      => $this->strictRedirect,
                 'referer'     => $this->referer,
                 'protocols'   => $this->protocols,
-                'on_redirect' => fn () => call_user_func($this->handler, $request, $response)
+                'on_redirect' => function() use ($request, $response) {
+                    call_user_func($this->handler, $request, $response);
+                }
             ];
         }
 
-        return $this->readyData;
+        return $readyData;
 
     }
 

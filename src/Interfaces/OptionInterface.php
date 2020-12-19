@@ -1,9 +1,9 @@
 <?php
 
-namespace System\Http\HttpRequest\Interfaces;
+namespace Codememory\Screw\Interfaces;
 
-use System\Http\HttpRequest\HttpRequest;
-use System\Http\HttpRequest\Response\Response;
+use Codememory\Screw\HttpRequest;
+use Codememory\Screw\Response\Response;
 
 /**
  * Interface OptionInterface

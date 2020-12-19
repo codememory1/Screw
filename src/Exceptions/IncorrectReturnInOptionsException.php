@@ -1,9 +1,8 @@
 <?php
 
-namespace System\Http\HttpRequest\Exceptions;
+namespace Codememory\Screw\Exceptions;
 
 use ErrorException;
-use JetBrains\PhpStorm\Pure;
 
 /**
  * Class IncorrectReturnInOptionsException
@@ -15,14 +14,14 @@ class IncorrectReturnInOptionsException extends ErrorException
 {
 
     /**
-     * @var string|null
+     * @var string
      */
-    private ?string $option;
+    private $option;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private ?string $expected;
+    private $expected;
 
     /**
      * IncorrectReturnInOptionsException constructor.
@@ -30,7 +29,7 @@ class IncorrectReturnInOptionsException extends ErrorException
      * @param string $option
      * @param string $expected
      */
-    #[Pure] public function __construct(string $option, string $expected)
+    public function __construct(string $option, string $expected)
     {
 
         $this->option = $option;
@@ -46,9 +45,9 @@ class IncorrectReturnInOptionsException extends ErrorException
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getOption(): ?string
+    public function getOption(): string
     {
 
         return $this->option;
@@ -56,9 +55,9 @@ class IncorrectReturnInOptionsException extends ErrorException
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getExpected(): ?string
+    public function getExpected(): string
     {
 
         return $this->expected;

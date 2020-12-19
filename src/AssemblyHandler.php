@@ -1,8 +1,6 @@
 <?php
 
-namespace System\Http\HttpRequest;
-
-use JetBrains\PhpStorm\Pure;
+namespace Codememory\Screw;
 
 /**
  * @package System\Http\HttpRequest
@@ -16,7 +14,7 @@ class AssemblyHandler
     /**
      * @return string
      */
-    #[Pure] protected function getCollectedUrl(): string
+    protected function getCollectedUrl(): string
     {
 
         if(!is_null($this->port) && is_integer($this->port)) {

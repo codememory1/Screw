@@ -1,9 +1,8 @@
 <?php
 
-namespace System\Http\HttpRequest\Response;
+namespace Codememory\Screw\Response;
 
-use JetBrains\PhpStorm\Pure;
-use System\Http\HttpRequest\HttpRequest;
+use Codememory\Screw\HttpRequest;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 
 /**
@@ -23,12 +22,12 @@ class Response extends Handler
     /**
      * @var int
      */
-    protected int $type = 4;
+    protected $type = 4;
 
     /**
      * @var HttpRequest
      */
-    protected HttpRequest $request;
+    protected $request;
 
     /**
      * Response constructor.
@@ -72,7 +71,7 @@ class Response extends Handler
     /**
      * @return mixed
      */
-    public function getResponseBody(): mixed
+    public function getResponseBody()
     {
 
         return $this->responseHandler(
@@ -86,7 +85,7 @@ class Response extends Handler
     /**
      * @return int
      */
-    #[Pure] public function getResponseCode(): int
+    public function getResponseCode(): int
     {
 
         return $this->request
@@ -98,7 +97,7 @@ class Response extends Handler
     /**
      * @return GuzzleResponse
      */
-    #[Pure] public function getResponseGuzzle(): GuzzleResponse
+    public function getResponseGuzzle(): GuzzleResponse
     {
 
         return $this->request

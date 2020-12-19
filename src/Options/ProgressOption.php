@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Http\HttpRequest\Options;
+namespace Codememory\Screw\Options;
 
 /**
  * Class ProgressOption

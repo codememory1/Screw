@@ -1,10 +1,10 @@
 <?php
 
-namespace System\Http\HttpRequest\Options;
+namespace Codememory\Screw\Options;
 
-use System\Http\HttpRequest\HttpRequest;
-use System\Http\HttpRequest\Interfaces\OptionInterface;
-use System\Http\HttpRequest\Response\Response;
+use Codememory\Screw\HttpRequest;
+use Codememory\Screw\Interfaces\OptionInterface;
+use Codememory\Screw\Response\Response;
 
 /**
  * Class AuthorizationOption
@@ -22,34 +22,34 @@ class AuthorizationOption extends Invoke implements OptionInterface
     /**
      * @var int|string|null
      */
-    private int|string|null $username = null;
+    private $username = null;
 
     /**
      * @var int|string|null
      */
-    private int|string|null $password = null;
+    private $password = null;
 
     /**
      * @var string|null
      */
-    private ?string $type = null;
+    private $type = null;
 
     /**
      * @var array
      */
-    private array $readyData = [];
+    private $readyData = [];
 
     /**
      * @var bool
      */
-    private bool $statusAuth = true;
+    private $statusAuth = true;
 
     /**
      * @param string|int $username
      *
      * @return object
      */
-    public function username(string|int $username): object
+    public function username($username): AuthorizationOption
     {
 
         $this->username = $username;
@@ -63,7 +63,7 @@ class AuthorizationOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function password(string|int $password): object
+    public function password($password): AuthorizationOption
     {
 
         $this->password = $password;
@@ -77,7 +77,7 @@ class AuthorizationOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function type(string $type): object
+    public function type(string $type): AuthorizationOption
     {
 
         $this->type = $type;
@@ -89,7 +89,7 @@ class AuthorizationOption extends Invoke implements OptionInterface
     /**
      * @return object
      */
-    public function disable(): object
+    public function disable(): AuthorizationOption
     {
 
         $this->statusAuth = false;
@@ -101,7 +101,7 @@ class AuthorizationOption extends Invoke implements OptionInterface
     /**
      * @return object
      */
-    public function enable(): object
+    public function enable(): AuthorizationOption
     {
 
         $this->statusAuth = true;

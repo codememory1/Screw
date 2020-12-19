@@ -1,10 +1,10 @@
 <?php
 
-namespace System\Http\HttpRequest\Options;
+namespace Codememory\Screw\Options;
 
-use System\Http\HttpRequest\HttpRequest;
-use System\Http\HttpRequest\Interfaces\OptionInterface;
-use System\Http\HttpRequest\Response\Response;
+use Codememory\Screw\HttpRequest;
+use Codememory\Screw\Interfaces\OptionInterface;
+use Codememory\Screw\Response\Response;
 
 /**
  * Class SSLCertOption
@@ -18,17 +18,17 @@ class SSLCertOption extends Invoke implements OptionInterface
     /**
      * @var array|string|null
      */
-    private array|string|null $certificate = null;
+    private $certificate = null;
 
     /**
      * @var array|string|null
      */
-    private array|string|null $sslKey = null;
+    private $sslKey = null;
 
     /**
      * @var array
      */
-    private array $readyData = [];
+    private $readyData = [];
 
     /**
      * @param string $pathCertificate
@@ -36,7 +36,7 @@ class SSLCertOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function certificate(string $pathCertificate, $password = null): object
+    public function certificate(string $pathCertificate, $password = null): SSLCertOption
     {
 
         $this->certificate = empty($password) ? $pathCertificate : [$pathCertificate, $password];
@@ -51,7 +51,7 @@ class SSLCertOption extends Invoke implements OptionInterface
      *
      * @return object
      */
-    public function key(string $pathCertificate, $password = null): object
+    public function key(string $pathCertificate, $password = null): SSLCertOption
     {
 
         $this->sslKey = empty($password) ? $pathCertificate : [$pathCertificate, $password];

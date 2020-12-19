@@ -131,7 +131,7 @@ composer require codememory/http-screw
     ->option(Request::TIMEOUT, function(TimeoutOption $timeout): TimeoutOption {
         $timeout
             ->delay(4)
-            ->responseTime(5);
+            ->requestTime(5);
          
         return $timeout;
     })
