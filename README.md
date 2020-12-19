@@ -40,7 +40,7 @@ composer require codememory/http-screw
 - `response(): GuzzleResponse` Возрощает Response пакета Guzzle
 
 # <a name="list-options"></a>Опции и их компоненты
-### <a name="Redirect-Option"></a> Redirect <span style="color:#38bac7">HttpRequest::O_REDIRECT</span>
+### <a name="Redirect-Option"></a> Redirect <u>HttpRequest::O_REDIRECT</u>
 - `redirect()` Разришение Перенаправлений
     - > _boolean_ **$performRedirects** (_default_: false)
 
@@ -58,7 +58,7 @@ composer require codememory/http-screw
 
 - `allowProtocols()` Добавить разрешенные протоколы
     - > _string_ **...$args** (_default_: [http, https])
-### <a name="Auth-Option"></a> Authorization <span style="color:#38bac7">HttpRequest::O_AUTH</span>
+### <a name="Auth-Option"></a> Authorization <u>HttpRequest::O_AUTH</u>
 - `username()` Имя пользователя
     - > _string|integer_ **$username** (_default_: null)
 
@@ -74,7 +74,7 @@ composer require codememory/http-screw
 - `enable()` Включить аутификацию
     - > None (_default_: true(On))
 
-### <a name="Timeout-Option"></a> Timeout(сек) <span style="color:#38bac7">HttpRequest::O_TIMEOUT</span>
+### <a name="Timeout-Option"></a> Timeout(сек) <u>HttpRequest::O_TIMEOUT</u>
 - `connectionTime()` Время подключения к серверу
     - > _integer|float_ **$time** (_default_: 0)
 
@@ -84,7 +84,7 @@ composer require codememory/http-screw
 - `readTime()` Время использования при чтении потокового тела
   - > _integer|float_ **$time** (_default_: default_socket_timeout of php.ini)
 
-### <a name="SSL-Cert-Option"></a> SSL Cert <span style="color:#38bac7">HttpRequest::O_SSL</span>
+### <a name="SSL-Cert-Option"></a> SSL Cert <u>HttpRequest::O_SSL</u>
 - `certificate()` Путь к файлу, содержащему сертификат в формате PEM
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
@@ -93,7 +93,7 @@ composer require codememory/http-screw
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
 
-### <a name="Proxy-Option"></a> Proxy <span style="color:#38bac7">HttpRequest::O_PROXY</span>
+### <a name="Proxy-Option"></a> Proxy <u>HttpRequest::O_PROXY</u>
 - `setProxy()` Добавить прокси с определенным протоколом
   - > _string_ **$proxy** (_default_: null) - URL-адрес прокси
   - > _string|null_ **$protocol** (_default_: None) - Протокол прокси
