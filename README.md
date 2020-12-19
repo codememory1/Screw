@@ -18,6 +18,7 @@ composer require codememory/http-screw
     - [AuthorizationOption](#Auth-Option)
     - [TimeoutOption](#Timeout-Option)
     - [SSL Cert](#SSL-Cert-Option)
+    - [ProxyOption](#Proxy-Option)
 - #### [Request Методы](#Request-Method)
 
 # <a name="Request-Method"></a>Request Методы
@@ -91,6 +92,25 @@ composer require codememory/http-screw
 - `key()` Путь к файлу, содержащему закрытый ключ SSL  в формате PEM
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
+
+### <a name="Proxy-Option"></a> Proxy
+- `setProxy()` Добавить прокси с определенным протоколом
+  - > _string_ **$proxy** (_default_: null) - URL-адрес прокси
+  - > _string|null_ **$protocol** (_default_: None) - Протокол прокси
+
+- `username()` Имя пользователя
+  - > _string_ **$username** (_default_: None) - Пример с именем пользователя [http://username:password@127.0.0.1:80]
+
+- `password()` Пароль пользователя
+  - > _string_ **$password** (_default_: None)
+
+- `setUser()` Объединение методов `username()` и `password()` 
+  - > _string_ **$username** (_default_: None)
+  - > _string_ **$password** (_default_: None)
+  - > _boolean_ **$forAllAddresses** (_default_: false) - Добавить ко всем следующим **URL-адресам** **имя пользователя** и **пароль**  
+
+- `preventProxy()` Добавить имена хостов, которые не следует проксировать
+  - > _string_ **...$args** (_default_: None)
 
 ### Отправка запроса
 ```php
