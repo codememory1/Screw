@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Http\HttpRequest\Response;
+namespace Codememory\Screw\Response;
 
 /**
  * Class Handler
@@ -14,17 +14,27 @@ class Handler
     /**
      * @param $data
      *
-     * @return mixed
+     * @return false|mixed|string
      */
-    protected function responseHandler($data): mixed
+    protected function responseHandler($data)
     {
 
-        return match ($this->type) {
-            1 => json_encode($data),
-            2 => json_decode($data, true),
-            3 => json_decode($data, false),
-            default => (string) $data
-        };
+        switch ($this->type) {
+            case 1:
+                $data = json_encode($data);
+                break;
+            case 2:
+                $data = json_decode($data, true);
+                break;
+            case 3:
+                $data = json_decode($data, false);
+                break;
+            default:
+                $data = (string) $data;
+
+        }
+
+        return $data;
 
     }
 

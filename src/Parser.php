@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Http\HttpRequest;
+namespace Codememory\Screw;
 
 /**
  * Class Parser

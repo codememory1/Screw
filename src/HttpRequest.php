@@ -1,25 +1,21 @@
 <?php
 
-namespace System\Http\HttpRequest;
+namespace Codememory\Screw;
 
+use Codememory\Screw\Exceptions\IncorrectReturnInOptionsException;
+use Codememory\Screw\Exceptions\InvalidOptionException;
+use Codememory\Screw\Interfaces\OptionInterface;
+use Codememory\Screw\Options\AuthorizationOption;
+use Codememory\Screw\Options\ProgressOption;
+use Codememory\Screw\Options\ProxyOption;
+use Codememory\Screw\Options\RedirectOption;
+use Codememory\Screw\Options\SSLCertOption;
+use Codememory\Screw\Options\TimeoutOption;
+use Codememory\Screw\Response\Response;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use ReflectionClass;
-use System\Http\HttpRequest\Exceptions\ {
-    IncorrectReturnInOptionsException,
-    InvalidOptionException
-};
-use System\Http\HttpRequest\Interfaces\OptionInterface;
-use System\Http\HttpRequest\Options\ {
-    AuthorizationOption,
-    ProgressOption,
-    ProxyOption,
-    RedirectOption,
-    SSLCertOption,
-    TimeoutOption
-};
-use System\Http\HttpRequest\Response\Response;
 
 /**
  * Class HttpRequest
@@ -40,7 +36,7 @@ class HttpRequest extends AssemblyHandler
     /**
      * @var array|string[]
      */
-    private array $options = [
+    private $options = [
         'redirect'      => RedirectOption::class,
         'authorization' => AuthorizationOption::class,
         'ssl-cert'      => SSLCertOption::class,
@@ -52,34 +48,34 @@ class HttpRequest extends AssemblyHandler
     /**
      * @var array
      */
-    public array $readyOptions = [];
+    public $readyOptions = [];
 
     /**
      * @var string
      */
-    protected string $method = 'GET';
+    protected $method = 'GET';
 
     /**
      * @var ?string
      */
-    protected ?string $url = null;
+    protected $url = null;
 
     /**
      * @var int|null
      */
-    protected ?int $port = null;
+    protected $port = null;
 
     /**
      * @var GuzzleResponse
      */
-    private GuzzleResponse $response;
+    private $response;
 
     /**
      * @param string $url
      *
      * @return object
      */
-    public function setUrl(string $url): object
+    public function setUrl(string $url): HttpRequest
     {
 
         $this->url = $url;
@@ -93,7 +89,7 @@ class HttpRequest extends AssemblyHandler
      *
      * @return object
      */
-    public function addPort(int $port): object
+    public function addPort(int $port): HttpRequest
     {
 
         $this->port = $port;
@@ -108,7 +104,7 @@ class HttpRequest extends AssemblyHandler
      * @return object
      * @throws GuzzleException
      */
-    private function saveReadyOption(OptionInterface $options): object
+    private function saveReadyOption(OptionInterface $options): HttpRequest
     {
 
         $this->send();
@@ -133,7 +129,7 @@ class HttpRequest extends AssemblyHandler
      * @return object
      * @throws IncorrectReturnInOptionsException
      */
-    private function optionReturnCheck(OptionInterface $options, string $option): object
+    private function optionReturnCheck(OptionInterface $options, string $option): HttpRequest
     {
 
         $reflection = new ReflectionClass($this);
@@ -153,8 +149,9 @@ class HttpRequest extends AssemblyHandler
      *
      * @return object
      * @throws InvalidOptionException|IncorrectReturnInOptionsException
+     * @throws GuzzleException
      */
-    public function option(string $option, callable $callback): object
+    public function option(string $option, callable $callback): HttpRequest
     {
 
         if (array_key_exists($option, $this->options)) {
@@ -177,7 +174,7 @@ class HttpRequest extends AssemblyHandler
      *
      * @return object
      */
-    public function setMethod(string $method): object
+    public function setMethod(string $method): HttpRequest
     {
 
         $this->method = $method;

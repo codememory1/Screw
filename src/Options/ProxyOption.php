@@ -1,10 +1,10 @@
 <?php
 
-namespace System\Http\HttpRequest\Options;
+namespace Codememory\Screw\Options;
 
-use System\Http\HttpRequest\HttpRequest;
-use System\Http\HttpRequest\Interfaces\OptionInterface;
-use System\Http\HttpRequest\Response\Response;
+use Codememory\Screw\HttpRequest;
+use Codememory\Screw\Interfaces\OptionInterface;
+use Codememory\Screw\Response\Response;
 
 /**
  * Class ProxyOption

@@ -1,9 +1,8 @@
 <?php
 
-namespace System\Http\HttpRequest\Exceptions;
+namespace Codememory\Screw\Exceptions;
 
 use ErrorException;
-use JetBrains\PhpStorm\Pure;
 
 /**
  * Class InvalidOptionException
@@ -19,7 +18,7 @@ class InvalidOptionException extends ErrorException
      *
      * @param string $option
      */
-    #[Pure] public function __construct(string $option)
+    public function __construct(string $option)
     {
 
         parent::__construct(sprintf('An error occurred in the Http Request %s option not found', $option));

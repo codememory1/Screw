@@ -1,5 +1,5 @@
 {
-    "name": "codememory/http-screw",
+    "name": "codememory/screw",
     "description": "Component for sending Http RequestAuthor",
     "type": "library",
     "keywords": [
