@@ -73,10 +73,24 @@ composer require codememory/http-screw
 - `enable()` Включить аутификацию
     - > None (_default_: true(On))
 
-### <a name="Timeout-Option"></a> Timeout
-- `type()` Тип аутификации [**_basic_, _digest_, _ntlm_**]
-    - > _string_ **$type** (_default_: null)
+### <a name="Timeout-Option"></a> Timeout(сек)
+- `connectionTime()` Время подключения к серверу
+    - > _integer|float_ **$time** (_default_: 0)
 
+- `requestTime()` Время запроса
+  - > _integer|float_ **$time** (_default_: 0)
+
+- `readTime()` Время использования при чтении потокового тела
+  - > _integer|float_ **$time** (_default_: default_socket_timeout of php.ini)
+
+### <a name="SSL-Cert-Option"></a> SSL Cert
+- `certificate()` Путь к файлу, содержащему сертификат в формате PEM
+  - > _string_ **$pathCertificate** (_default_: None)
+  - > _string|null_ **$password** (_default_: null)
+
+- `key()` Путь к файлу, содержащему закрытый ключ SSL  в формате PEM
+  - > _string_ **$pathCertificate** (_default_: None)
+  - > _string|null_ **$password** (_default_: null)
 
 ### Отправка запроса
 ```php
