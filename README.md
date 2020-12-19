@@ -57,7 +57,7 @@ composer require codememory/http-screw
 
 - `allowProtocols()` Разришеные протоколы
     - > _string_ **...$args** (_default_: [http, https])
-### <a name="Redirect-Option"></a> Authorization
+### <a name="Auth-Option"></a> Authorization
 - `username()` Имя пользователя
     - > _string|integer_ **$username** (_default_: null)
 
