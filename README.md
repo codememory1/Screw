@@ -40,7 +40,8 @@ composer require codememory/http-screw
 - `response(): GuzzleResponse` Возрощает Response пакета Guzzle
 
 # <a name="list-options"></a>Опции и их компоненты
-### <a name="Redirect-Option"></a> Redirect <u>HttpRequest::O_REDIRECT</u>
+### <a name="Redirect-Option"></a> Redirect
+    > HttpRequest::O_REDIRECT
 - `redirect()` Разришение Перенаправлений
     - > _boolean_ **$performRedirects** (_default_: false)
 
@@ -58,7 +59,8 @@ composer require codememory/http-screw
 
 - `allowProtocols()` Добавить разрешенные протоколы
     - > _string_ **...$args** (_default_: [http, https])
-### <a name="Auth-Option"></a> Authorization <u>HttpRequest::O_AUTH</u>
+### <a name="Auth-Option"></a> Authorization
+    > HttpRequest::O_AUTH
 - `username()` Имя пользователя
     - > _string|integer_ **$username** (_default_: null)
 
@@ -74,7 +76,8 @@ composer require codememory/http-screw
 - `enable()` Включить аутификацию
     - > None (_default_: true(On))
 
-### <a name="Timeout-Option"></a> Timeout(сек) <u>HttpRequest::O_TIMEOUT</u>
+### <a name="Timeout-Option"></a> Timeout(сек)
+    > HttpRequest::O_TIMEOUT
 - `connectionTime()` Время подключения к серверу
     - > _integer|float_ **$time** (_default_: 0)
 
@@ -84,7 +87,8 @@ composer require codememory/http-screw
 - `readTime()` Время использования при чтении потокового тела
   - > _integer|float_ **$time** (_default_: default_socket_timeout of php.ini)
 
-### <a name="SSL-Cert-Option"></a> SSL Cert <u>HttpRequest::O_SSL</u>
+### <a name="SSL-Cert-Option"></a> SSL Cert
+    > HttpRequest::O_SSL
 - `certificate()` Путь к файлу, содержащему сертификат в формате PEM
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
@@ -93,7 +97,8 @@ composer require codememory/http-screw
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
 
-### <a name="Proxy-Option"></a> Proxy <u>HttpRequest::O_PROXY</u>
+### <a name="Proxy-Option"></a> Proxy
+    > HttpRequest::O_PROXY
 - `setProxy()` Добавить прокси с определенным протоколом
   - > _string_ **$proxy** (_default_: null) - URL-адрес прокси
   - > _string|null_ **$protocol** (_default_: None) - Протокол прокси
