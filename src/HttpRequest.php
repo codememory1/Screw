@@ -2,6 +2,7 @@
 
 namespace Codememory\Screw;
 
+use Closure;
 use Codememory\Screw\Exceptions\IncorrectReturnInOptionsException;
 use Codememory\Screw\Exceptions\InvalidOptionException;
 use Codememory\Screw\Interfaces\OptionInterface;
@@ -12,9 +13,14 @@ use Codememory\Screw\Options\RedirectOption;
 use Codememory\Screw\Options\SSLCertOption;
 use Codememory\Screw\Options\TimeoutOption;
 use Codememory\Screw\Response\Response;
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
+use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 
 /**
@@ -69,6 +75,16 @@ class HttpRequest extends AssemblyHandler
      * @var GuzzleResponse
      */
     private $response;
+
+    /**
+     * @var callable|null
+     */
+    protected $refuser = null;
+
+    /**
+     * @var array
+     */
+    private $processResponseCode = [];
 
     /**
      * @param string $url
@@ -184,6 +200,90 @@ class HttpRequest extends AssemblyHandler
     }
 
     /**
+     * @param callable $callback
+     * @param int      $code
+     *
+     * @return $this
+     */
+    public function processResponseCode(callable $callback, int $code = 200): HttpRequest
+    {
+
+        $this->processResponseCode[$code] = [
+            'callback' => $callback
+        ];
+
+        return $this;
+
+    }
+
+    /**
+     * @param int $status
+     * @param     $response
+     *
+     * @return $this
+     */
+    private function handlerResponseCode(int $status, $response): HttpRequest
+    {
+
+        if (array_key_exists($status, $this->processResponseCode)) {
+            call_user_func($this->processResponseCode[$status]['callback'], $response);
+        }
+
+        return $this;
+
+    }
+
+    /**
+     * @param callable $callback
+     *
+     * @return $this
+     */
+    public function refuser(callable $callback): HttpRequest
+    {
+
+        $this->refuser = $callback;
+
+        return $this;
+
+    }
+
+    /**
+     * @param Client $client
+     *
+     * @return ResponseInterface
+     * @throws GuzzleException
+     */
+    private function request(Client $client): ResponseInterface
+    {
+
+        return $client->request($this->method, $this->getCollectedUrl(), $this->readyOptions);
+
+    }
+
+    /**
+     * @param Client $client
+     *
+     * @return Exception|RequestException|ResponseInterface
+     * @throws GuzzleException
+     */
+    private function processRefuser(Client $client)
+    {
+
+        if ($this->refuser instanceof Closure) {
+            try {
+                return $this->request($client);
+            } catch (RequestException $e) {
+                call_user_func($this->refuser, $e);
+
+                return $e->getResponse();
+            }
+        }
+
+        return $this->request($client);
+
+    }
+
+    /**
      * @return $this
      * @throws GuzzleException
      */
@@ -191,10 +291,17 @@ class HttpRequest extends AssemblyHandler
     {
 
         $client = new Client();
-        $response = $client->request($this->method, $this->getCollectedUrl(), $this->readyOptions);
+        $response = new Response($this);
 
-        /** @var $response GuzzleResponse */
-        $this->response = $response;
+        try {
+            $this->response = $this->processRefuser($client);
+
+            $this->handlerResponseCode($this->response->getStatusCode(), $response);
+        } catch (ClientException $e) {
+            $this->handlerResponseCode($e->getCode(), $response);
+        } catch (ServerException $e) {
+            $this->handlerResponseCode($e->getCode(), $response);
+        }
 
         return $this;
 

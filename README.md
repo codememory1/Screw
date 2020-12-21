@@ -28,12 +28,22 @@ composer require codememory/http-screw
 - `addPort()` Добавить ПОРТ к URL
     - > _integer_ **$port** (_default_: null)
 
-- `setMethod()` Метод запроса GET|POST|PUT|DELETE|UPDATE
+- `setMethod()` Метод запроса [ **GET|POST|PUT|DELETE|UPDATE** ]
     - > _string_ **$method** (_default_: GET)
 
 - `option()` Добавить опцию к запросу
     - > _string_ **$option** (_default_: null)
-    - > _callable_ **$callback** (_default_: null)
+    - > _callable_ **$callback** (_default_: None)
+      - > _object_ **$option** (_default_: $option)
+      
+- `processResponseCode()` Обработать **HTTP**-код 
+  - > _callable_ **$callback** (_default_: None)
+    - > _Response_ **$response** (_default_: $response)
+  - > _integer_ **$code** (_default_: 200)
+
+- `refuser()` Обработать ошибку запроса. Это может быть ошибка **connect** и прочее
+  - > _callable_ **$callback** (_default_: None)
+    - > _RequestException_ **$e** (_default_: $e)
 
 - `send()` Метод отправляет запрос на указанный URL
 

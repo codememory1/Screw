@@ -43,9 +43,7 @@ class ProxyOption extends Invoke implements OptionInterface
     private function assemblyAddress(string $address): string
     {
 
-        preg_match('/(?<protocol>[a-z-A-Z]+):\/\/(?<address>.*)/', $address, $match);
-
-        if(isset($this->userdata['username']) && isset($this->userdata['password'])) {
+        if(isset($this->userdata['username']) && isset($this->userdata['password']) && preg_match('/(?<protocol>[a-z-A-Z]+):\/\/(?<address>.*)/', $address, $match)) {
             return sprintf(
                 '%s://%s:%s@%s',
                 $match['protocol'], $this->userdata['username'], $this->userdata['password'], $match['address']
