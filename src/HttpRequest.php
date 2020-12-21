@@ -67,6 +67,11 @@ class HttpRequest extends AssemblyHandler
     protected $url = null;
 
     /**
+     * @var null
+     */
+    protected $baseUrl = null;
+
+    /**
      * @var int|null
      */
     protected $port = null;
@@ -85,6 +90,25 @@ class HttpRequest extends AssemblyHandler
      * @var array
      */
     private $processResponseCode = [];
+
+    /**
+     * @var bool
+     */
+    private $clientOptions = false;
+
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function baseUrl(string $url): HttpRequest
+    {
+
+        $this->baseUrl = $url;
+
+        return $this;
+
+    }
 
     /**
      * @param string $url
@@ -130,7 +154,11 @@ class HttpRequest extends AssemblyHandler
 
         if ($call !== []) {
             foreach ($call as $key => $value) {
-                $this->readyOptions[$key] = $value;
+                if($this->clientOptions === false) {
+                    $this->readyOptions[$key] = $value;
+                } else {
+                    $this->readyOptions['clientOptions'][$key] = $value;
+                }
             }
         }
 
@@ -180,6 +208,20 @@ class HttpRequest extends AssemblyHandler
         } else {
             throw new InvalidOptionException($option);
         }
+
+        return $this;
+
+    }
+
+    /**
+     * @param bool $status
+     *
+     * @return $this
+     */
+    public function clientOptions(bool $status): HttpRequest
+    {
+
+        $this->clientOptions = $status;
 
         return $this;
 
@@ -284,22 +326,42 @@ class HttpRequest extends AssemblyHandler
     }
 
     /**
+     * @return array
+     */
+    private function getClientOptions(): array
+    {
+
+        $options = [];
+
+        if($this->baseUrl !== null) {
+            $options['base_uri'] = $this->getCollectBaseUrl();
+        }
+
+        if(array_key_exists('clientOptions', $this->readyOptions)) {
+            $options += $this->readyOptions['clientOptions'];
+
+            unset($this->readyOptions['clientOptions']);
+        }
+
+        return $options;
+
+    }
+
+    /**
      * @return $this
      * @throws GuzzleException
      */
     public function send(): HttpRequest
     {
 
-        $client = new Client();
+        $client = new Client($this->getClientOptions());
         $response = new Response($this);
 
         try {
             $this->response = $this->processRefuser($client);
 
             $this->handlerResponseCode($this->response->getStatusCode(), $response);
-        } catch (ClientException $e) {
-            $this->handlerResponseCode($e->getCode(), $response);
-        } catch (ServerException $e) {
+        } catch (ClientException | ServerException $e) {
             $this->handlerResponseCode($e->getCode(), $response);
         }
 

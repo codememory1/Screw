@@ -22,6 +22,9 @@ composer require codememory/http-screw
 - #### [Request Методы](#Request-Method)
 
 # <a name="Request-Method"></a>Request Методы
+- `baseUrl(): HttpRequest` Добавить URL в клиент. И тогда в `setUrl()` можно просто передать ссылку
+  - > _string_ **$url** (_default_: null)
+
 - `setUrl(): HttpRequest` Добавить URL на который будет сделан запрос
     - > _string_ **$url** (_default_: null)
 
@@ -31,9 +34,12 @@ composer require codememory/http-screw
 - `setMethod(): HttpRequest` Метод запроса [ **GET|POST|PUT|DELETE|UPDATE** ]
     - > _string_ **$method** (_default_: GET)
 
+- `clientOptions(): HttpRequest` Следующее указаные опции добавить в клиент. Которые будут по умолчанию
+  - > _boolean_ **$status** (_default_: false)
+
 - `option(): HttpRequest` Добавить опцию к запросу
     - > _string_ **$option** (_default_: null)
-    - > _callable_ **$callback** (_default_: None)
+    - > _callable_ **$callback** (_default_: None): $option
       - > _object_ **$option** (_default_: $option)
       
 - `processResponseCode(): HttpRequest` Обработать **HTTP**-код 
