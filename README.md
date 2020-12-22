@@ -112,6 +112,9 @@ composer require codememory/http-screw
 - `key()` Путь к файлу, содержащему закрытый ключ SSL  в формате PEM
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
+    
+- `verify()` Включить проверку SSL или Установить путь к собственому сертификату на диске
+  - > _boolean|string_ **$pathOrStatus** (_default_: true)
 
 ### <a name="Proxy-Option"></a> Proxy
     > HttpRequest::O_PROXY

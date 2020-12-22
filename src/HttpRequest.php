@@ -7,6 +7,7 @@ use Codememory\Screw\Exceptions\IncorrectReturnInOptionsException;
 use Codememory\Screw\Exceptions\InvalidOptionException;
 use Codememory\Screw\Interfaces\OptionInterface;
 use Codememory\Screw\Options\AuthorizationOption;
+use Codememory\Screw\Options\ParamsOption;
 use Codememory\Screw\Options\ProgressOption;
 use Codememory\Screw\Options\ProxyOption;
 use Codememory\Screw\Options\RedirectOption;
@@ -38,6 +39,7 @@ class HttpRequest extends AssemblyHandler
     const O_TIMEOUT = 'timeout';
     const O_PROXY = 'proxy';
     const O_PROGRESS = 'progress';
+    const O_PARAMS = 'params';
 
     /**
      * @var array|string[]
@@ -48,7 +50,8 @@ class HttpRequest extends AssemblyHandler
         'ssl-cert'      => SSLCertOption::class,
         'timeout'       => TimeoutOption::class,
         'proxy'         => ProxyOption::class,
-        'progress'      => ProgressOption::class
+        'progress'      => ProgressOption::class,
+        'params'        => ParamsOption::class
     ];
 
     /**
@@ -139,55 +142,6 @@ class HttpRequest extends AssemblyHandler
     }
 
     /**
-     * @param OptionInterface $options
-     *
-     * @return object
-     * @throws GuzzleException
-     */
-    private function saveReadyOption(OptionInterface $options): HttpRequest
-    {
-
-        $this->send();
-
-        $response = new Response($this);
-        $call = $options($this, $response);
-
-        if ($call !== []) {
-            foreach ($call as $key => $value) {
-                if($this->clientOptions === false) {
-                    $this->readyOptions[$key] = $value;
-                } else {
-                    $this->readyOptions['clientOptions'][$key] = $value;
-                }
-            }
-        }
-
-        return $this;
-
-    }
-
-    /**
-     * @param OptionInterface $options
-     * @param string          $option
-     *
-     * @return object
-     * @throws IncorrectReturnInOptionsException
-     */
-    private function optionReturnCheck(OptionInterface $options, string $option): HttpRequest
-    {
-
-        $reflection = new ReflectionClass($this);
-        $constants = array_flip($reflection->getConstants());
-
-        if (!$options instanceof $this->options[$option]) {
-            throw new IncorrectReturnInOptionsException($constants[$option], $this->options[$option]);
-        }
-
-        return $this;
-
-    }
-
-    /**
      * @param string   $option
      * @param callable $callback
      *
@@ -259,23 +213,6 @@ class HttpRequest extends AssemblyHandler
     }
 
     /**
-     * @param int $status
-     * @param     $response
-     *
-     * @return $this
-     */
-    private function handlerResponseCode(int $status, $response): HttpRequest
-    {
-
-        if (array_key_exists($status, $this->processResponseCode)) {
-            call_user_func($this->processResponseCode[$status]['callback'], $response);
-        }
-
-        return $this;
-
-    }
-
-    /**
      * @param callable $callback
      *
      * @return $this
@@ -286,6 +223,80 @@ class HttpRequest extends AssemblyHandler
         $this->refuser = $callback;
 
         return $this;
+
+    }
+
+    /**
+     * @param string $body
+     *
+     * @return $this
+     */
+    public function addBody(string $body): HttpRequest
+    {
+
+        $this->options['body'] = $body;
+
+        return $this;
+
+    }
+
+    /**
+     * @param $data
+     *
+     * @return $this
+     */
+    public function addJson($data): HttpRequest
+    {
+
+        $this->options['json'] = $data;
+
+        return $this;
+
+    }
+
+    /**
+     * @param $path
+     *
+     * @return $this
+     */
+    public function saveBody($path): HttpRequest
+    {
+
+        $this->options['sink'] = $path;
+
+        return $this;
+
+    }
+
+    /**
+     * @return $this
+     * @throws GuzzleException
+     */
+    public function send(): HttpRequest
+    {
+
+        $client = new Client($this->getClientOptions());
+        $response = new Response($this);
+
+        try {
+            $this->response = $this->processRefuser($client);
+
+            $this->handlerResponseCode($this->response->getStatusCode(), $response);
+        } catch (ClientException | ServerException $e) {
+            $this->handlerResponseCode($e->getCode(), $response);
+        }
+
+        return $this;
+
+    }
+
+    /**
+     * @return GuzzleResponse
+     */
+    public function response(): GuzzleResponse
+    {
+
+        return $this->response;
 
     }
 
@@ -348,21 +359,16 @@ class HttpRequest extends AssemblyHandler
     }
 
     /**
+     * @param int $status
+     * @param     $response
+     *
      * @return $this
-     * @throws GuzzleException
      */
-    public function send(): HttpRequest
+    private function handlerResponseCode(int $status, $response): HttpRequest
     {
 
-        $client = new Client($this->getClientOptions());
-        $response = new Response($this);
-
-        try {
-            $this->response = $this->processRefuser($client);
-
-            $this->handlerResponseCode($this->response->getStatusCode(), $response);
-        } catch (ClientException | ServerException $e) {
-            $this->handlerResponseCode($e->getCode(), $response);
+        if (array_key_exists($status, $this->processResponseCode)) {
+            call_user_func($this->processResponseCode[$status]['callback'], $response);
         }
 
         return $this;
@@ -370,12 +376,51 @@ class HttpRequest extends AssemblyHandler
     }
 
     /**
-     * @return GuzzleResponse
+     * @param OptionInterface $options
+     *
+     * @return object
+     * @throws GuzzleException
      */
-    public function response(): GuzzleResponse
+    private function saveReadyOption(OptionInterface $options): HttpRequest
     {
 
-        return $this->response;
+        $this->send();
+
+        $response = new Response($this);
+        $call = $options($this, $response);
+
+        if ($call !== []) {
+            foreach ($call as $key => $value) {
+                if($this->clientOptions === false) {
+                    $this->readyOptions[$key] = $value;
+                } else {
+                    $this->readyOptions['clientOptions'][$key] = $value;
+                }
+            }
+        }
+
+        return $this;
+
+    }
+
+    /**
+     * @param OptionInterface $options
+     * @param string          $option
+     *
+     * @return object
+     * @throws IncorrectReturnInOptionsException
+     */
+    private function optionReturnCheck(OptionInterface $options, string $option): HttpRequest
+    {
+
+        $reflection = new ReflectionClass($this);
+        $constants = array_flip($reflection->getConstants());
+
+        if (!$options instanceof $this->options[$option]) {
+            throw new IncorrectReturnInOptionsException($constants[$option], $this->options[$option]);
+        }
+
+        return $this;
 
     }
 

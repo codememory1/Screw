@@ -31,6 +31,11 @@ class SSLCertOption extends Invoke implements OptionInterface
     private $readyData = [];
 
     /**
+     * @var string|bool
+     */
+    private $verify = true;
+
+    /**
      * @param string $pathCertificate
      * @param null   $password
      *
@@ -61,6 +66,20 @@ class SSLCertOption extends Invoke implements OptionInterface
     }
 
     /**
+     * @param $pathOrStatus
+     *
+     * @return $this
+     */
+    public function verify($pathOrStatus): SSLCertOption
+    {
+
+        $this->verify = $pathOrStatus;
+
+        return $this;
+
+    }
+
+    /**
      * @param HttpRequest $request
      * @param Response    $response
      *
@@ -76,6 +95,8 @@ class SSLCertOption extends Invoke implements OptionInterface
         if($this->sslKey !== null) {
             $this->readyData['ssl_key'] = $this->sslKey;
         }
+
+        $this->readyData['verify'] = $this->verify;
 
         return $this->readyData;
 
