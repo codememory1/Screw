@@ -19,6 +19,7 @@ composer require codememory/http-screw
     - [TimeoutOption](#Timeout-Option)
     - [SSL Cert](#SSL-Cert-Option)
     - [ProxyOption](#Proxy-Option)
+    - [ParamsOption](#Params-Option)
 - #### [Request Методы](#Request-Method)
 
 # <a name="Request-Method"></a>Request Методы
