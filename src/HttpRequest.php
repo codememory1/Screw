@@ -7,6 +7,7 @@ use Codememory\Screw\Exceptions\IncorrectReturnInOptionsException;
 use Codememory\Screw\Exceptions\InvalidOptionException;
 use Codememory\Screw\Interfaces\OptionInterface;
 use Codememory\Screw\Options\AuthorizationOption;
+use Codememory\Screw\Options\HeadersOption;
 use Codememory\Screw\Options\ParamsOption;
 use Codememory\Screw\Options\ProgressOption;
 use Codememory\Screw\Options\ProxyOption;
@@ -40,6 +41,7 @@ class HttpRequest extends AssemblyHandler
     const O_PROXY = 'proxy';
     const O_PROGRESS = 'progress';
     const O_PARAMS = 'params';
+    const O_HEADERS = 'headers';
 
     /**
      * @var array|string[]
@@ -51,7 +53,8 @@ class HttpRequest extends AssemblyHandler
         'timeout'       => TimeoutOption::class,
         'proxy'         => ProxyOption::class,
         'progress'      => ProgressOption::class,
-        'params'        => ParamsOption::class
+        'params'        => ParamsOption::class,
+        'headers'       => HeadersOption::class
     ];
 
     /**

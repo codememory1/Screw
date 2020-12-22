@@ -21,6 +21,7 @@ composer require codememory/http-screw
     - [ProxyOption](#Proxy-Option)
     - [ParamsOption](#Params-Option)
 - #### [Request Методы](#Request-Method)
+- #### [Response Методы](#Response-Method)
 
 # <a name="Request-Method"></a>Request Методы
 - `baseUrl(): HttpRequest` Добавить URL в клиент. И тогда в `setUrl()` можно просто передать ссылку
