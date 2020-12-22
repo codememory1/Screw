@@ -52,6 +52,14 @@ composer require codememory/http-screw
   - > _callable_ **$callback** (_default_: None)
     - > _RequestException_ **$e** (_default_: $e)
 
+- `addBody(): HttpRequest` Отправить Body
+  - > _string_ **$body** (_default_: None)
+
+- `addJson(): HttpRequest` Загрузка данных в кодировке JSON в качестве тела запроса. Заголовок Content-Type `application/json` будет добавлен, если в сообщении уже нет заголовка Content-Type.
+  - > _mixed_ **$data** (_default_: None)
+    
+- `saveBody(): HttpRequest` Добавить Путь, где будет сохранен **body** ответ
+
 - `send(): HttpRequest` Метод отправляет запрос на указанный URL
 
 - `response(): GuzzleResponse` Возрощает Response пакета Guzzle
@@ -136,6 +144,19 @@ composer require codememory/http-screw
 
 - `preventProxy()` Добавить имена хостов, которые не следует проксировать
   - > _string_ **...$args** (_default_: None)
+
+### <a name="Params-Option"></a> Params
+- `form()` Передать **POST** данные, если метод запроса **POST**
+  - > _array_ **$data** (_default_: None)
+
+- `query()` Передать **GET** данные, если метод запроса **GET**
+  - > _array_ **$data** (_default_: None)
+
+- `withFiles(): ParamsOption` Отправить файлы. **Не работает вместе с методом `form()`**
+  - > _string_ **$inputName** (_default_: None)
+  - > _mixed **NOT** null_ **$contents** (_default_: None) - Данные для использования в элементе формы.
+  - > _?string_ **$filename** (_default_: Null)
+  - > _?array_ **$headers** (_default_: [])  
 
 ### Отправка запроса
 ```php

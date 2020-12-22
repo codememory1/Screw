@@ -50,12 +50,28 @@ class ParamsOption extends Invoke implements OptionInterface
     }
 
     /**
-     * @param array $data
+     * @param string      $inputName
+     * @param             $contents
+     * @param string|null $filename
+     * @param array       $headers
      *
      * @return $this
      */
-    public function withFiles(array $data): ParamsOption
+    public function withFiles(string $inputName, $contents, string $filename = null, array $headers = []): ParamsOption
     {
+
+        $data = [
+            'name'     => $inputName,
+            'contents' => $contents
+        ];
+
+        if($filename !== null) {
+            $data['filename'] = $filename;
+        }
+
+        if($headers !== []) {
+            $data['headers'] = $headers;
+        }
 
         $this->readyData['multipart'][] = $data;
 
@@ -71,8 +87,7 @@ class ParamsOption extends Invoke implements OptionInterface
      */
     protected function call(HttpRequest $request, Response $response): array
     {
-
-        dd($this->readyData);
+dd($this->readyData);
         return $this->readyData;
 
     }
