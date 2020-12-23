@@ -23,7 +23,6 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^7.2",
-        "ext-cassandra": "*",
         "php": ">= 7.1"
     },
     "autoload": {
