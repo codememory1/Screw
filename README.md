@@ -150,6 +150,7 @@ composer require codememory/http-screw
   - > _string_ **...$args** (_default_: None)
 
 ### <a name="Params-Option"></a> Params
+  > HttpRequest::O_PARAMS
 - `form()` Передать **POST** данные, если метод запроса **POST**
   - > _array_ **$data** (_default_: None)
 
@@ -163,6 +164,7 @@ composer require codememory/http-screw
   - > _?array_ **$headers** (_default_: [])  
 
 ### <a name="Headers-Option"></a> Headers
+  > HttpRequest::O_HEADERS
 - `decodeContent(): HeadersOption` Укажите, будут ли `Content-Encoding` ответы (gzip, deflate и т. Д.) Автоматически декодироваться.
   - > _string|boolean_ **$decode** (_default_: true)
 - `header()` Добавить заголовок
@@ -175,6 +177,7 @@ composer require codememory/http-screw
   - > _integer|boolean_ **$rule** (_default_: 1048576)
 
 ### <a name="Http-Option"></a> Http
+  > HttpRequest::O_HTTP
 - `setVersion()` Установить версию протокола
   - > _integer|float_ **$version** (_default_: 1.1)
 - `stream()` Установить потоковою передачу ответа, а не для загрузки сразу
@@ -192,6 +195,7 @@ composer require codememory/http-screw
   - > _boolean_ **$status** (_default_: None)
 
 ### <a name="Progress-Option"></a> Progress
+  > HttpRequest::O_PROGRESS
 - `progress()` Определяет функцию, вызываемую при выполнении передачи.
   - > _callable_ **$callback** (_default_: None)
     - > _integer_ **$downloadTotal** (_default_: 0) - общее количество байтов, ожидаемых к загрузке, ноль, если неизвестно
