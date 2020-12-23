@@ -18,28 +18,59 @@ composer require codememory/http-screw
     - [AuthorizationOption](#Auth-Option)
     - [TimeoutOption](#Timeout-Option)
     - [SSL Cert](#SSL-Cert-Option)
+    - [ProxyOption](#Proxy-Option)
+    - [ParamsOption](#Params-Option)
+    - [HeadersOption](#Headers-Option)
+    - [HttpOption](#Http-Option)
+    - [ProgressOption](#Progress-Option)
 - #### [Request Методы](#Request-Method)
+- #### [Response Методы](#Response-Method)
 
 # <a name="Request-Method"></a>Request Методы
-- `setUrl()` Добавить URL на который будет сделан запрос
+- `baseUrl(): HttpRequest` Добавить URL в клиент. И тогда в `setUrl()` можно просто передать ссылку
+  - > _string_ **$url** (_default_: null)
+
+- `setUrl(): HttpRequest` Добавить URL на который будет сделан запрос
     - > _string_ **$url** (_default_: null)
 
-- `addPort()` Добавить ПОРТ к URL
+- `addPort(): HttpRequest` Добавить ПОРТ к URL
     - > _integer_ **$port** (_default_: null)
 
-- `setMethod()` Метод запроса GET|POST|PUT|DELETE|UPDATE
+- `setMethod(): HttpRequest` Метод запроса [ **GET|POST|PUT|DELETE|UPDATE** ]
     - > _string_ **$method** (_default_: GET)
 
-- `option()` Добавить опцию к запросу
-    - > _string_ **$option** (_default_: null)
-    - > _callable_ **$callback** (_default_: null)
+- `clientOptions(): HttpRequest` Следующее указаные опции добавить в клиент. Которые будут по умолчанию
+  - > _boolean_ **$status** (_default_: false)
 
-- `send()` Метод отправляет запрос на указанный URL
+- `option(): HttpRequest` Добавить опцию к запросу
+    - > _string_ **$option** (_default_: null)
+    - > _callable_ **$callback** (_default_: None): $option
+      - > _object_ **$option** (_default_: $option)
+      
+- `processResponseCode(): HttpRequest` Обработать **HTTP**-код 
+  - > _callable_ **$callback** (_default_: None)
+    - > _Response_ **$response** (_default_: $response)
+  - > _integer_ **$code** (_default_: 200)
+
+- `refuser(): HttpRequest` Обработать ошибку запроса. Это может быть ошибка **connect** и прочее
+  - > _callable_ **$callback** (_default_: None)
+    - > _RequestException_ **$e** (_default_: $e)
+
+- `addBody(): HttpRequest` Отправить Body
+  - > _string_ **$body** (_default_: None)
+
+- `addJson(): HttpRequest` Загрузка данных в кодировке JSON в качестве тела запроса. Заголовок Content-Type `application/json` будет добавлен, если в сообщении уже нет заголовка Content-Type.
+  - > _mixed_ **$data** (_default_: None)
+    
+- `saveBody(): HttpRequest` Добавить Путь, где будет сохранен **body** ответ
+
+- `send(): HttpRequest` Метод отправляет запрос на указанный URL
 
 - `response(): GuzzleResponse` Возрощает Response пакета Guzzle
 
 # <a name="list-options"></a>Опции и их компоненты
 ### <a name="Redirect-Option"></a> Redirect
+    > HttpRequest::O_REDIRECT
 - `redirect()` Разришение Перенаправлений
     - > _boolean_ **$performRedirects** (_default_: false)
 
@@ -49,15 +80,16 @@ composer require codememory/http-screw
 - `strictRedirect()` Строгие Перенаправления
     - > _boolean_ **$strictly** (_default_: false)
 
-- `passingHeadersInRedirect()` Разрешить добавление заголовка referer при обноружении перенаправления
+- `addRefererOnRedirect()` Разрешить добавление заголовка referer при обноружении перенаправления
     - > _boolean_ **$allowDispatch** (_default_: true)
 
 - `redirectHandler()` Обработчик при обнаружении перенаправления
     - > _object|callable_ **$allowDispatch** (_default_: null)
 
-- `allowProtocols()` Разришеные протоколы
+- `allowProtocols()` Добавить разрешенные протоколы
     - > _string_ **...$args** (_default_: [http, https])
 ### <a name="Auth-Option"></a> Authorization
+    > HttpRequest::O_AUTH
 - `username()` Имя пользователя
     - > _string|integer_ **$username** (_default_: null)
 
@@ -74,6 +106,7 @@ composer require codememory/http-screw
     - > None (_default_: true(On))
 
 ### <a name="Timeout-Option"></a> Timeout(сек)
+    > HttpRequest::O_TIMEOUT
 - `connectionTime()` Время подключения к серверу
     - > _integer|float_ **$time** (_default_: 0)
 
@@ -84,6 +117,7 @@ composer require codememory/http-screw
   - > _integer|float_ **$time** (_default_: default_socket_timeout of php.ini)
 
 ### <a name="SSL-Cert-Option"></a> SSL Cert
+    > HttpRequest::O_SSL
 - `certificate()` Путь к файлу, содержащему сертификат в формате PEM
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
@@ -91,6 +125,79 @@ composer require codememory/http-screw
 - `key()` Путь к файлу, содержащему закрытый ключ SSL  в формате PEM
   - > _string_ **$pathCertificate** (_default_: None)
   - > _string|null_ **$password** (_default_: null)
+    
+- `verify()` Включить проверку SSL или Установить путь к собственому сертификату на диске
+  - > _boolean|string_ **$pathOrStatus** (_default_: true)
+
+### <a name="Proxy-Option"></a> Proxy
+    > HttpRequest::O_PROXY
+- `setProxy()` Добавить прокси с определенным протоколом
+  - > _string_ **$proxy** (_default_: null) - URL-адрес прокси
+  - > _string|null_ **$protocol** (_default_: None) - Протокол прокси
+
+- `username()` Имя пользователя
+  - > _string_ **$username** (_default_: None) - Пример с именем пользователя [http://username:password@127.0.0.1:80]
+
+- `password()` Пароль пользователя
+  - > _string_ **$password** (_default_: None)
+
+- `setUser()` Объединение методов `username()` и `password()` 
+  - > _string_ **$username** (_default_: None)
+  - > _string_ **$password** (_default_: None)
+  - > _boolean_ **$forAllAddresses** (_default_: false) - Добавить ко всем следующим **URL-адресам** **имя пользователя** и **пароль**  
+
+- `preventProxy()` Добавить имена хостов, которые не следует проксировать
+  - > _string_ **...$args** (_default_: None)
+
+### <a name="Params-Option"></a> Params
+- `form()` Передать **POST** данные, если метод запроса **POST**
+  - > _array_ **$data** (_default_: None)
+
+- `query()` Передать **GET** данные, если метод запроса **GET**
+  - > _array_ **$data** (_default_: None)
+
+- `withFiles(): ParamsOption` Отправить файлы. **Не работает вместе с методом `form()`**
+  - > _string_ **$inputName** (_default_: None)
+  - > _mixed **NOT** null_ **$contents** (_default_: None) - Данные для использования в элементе формы.
+  - > _?string_ **$filename** (_default_: Null)
+  - > _?array_ **$headers** (_default_: [])  
+
+### <a name="Headers-Option"></a> Headers
+- `decodeContent(): HeadersOption` Укажите, будут ли `Content-Encoding` ответы (gzip, deflate и т. Д.) Автоматически декодироваться.
+  - > _string|boolean_ **$decode** (_default_: true)
+- `header()` Добавить заголовок
+  - > _string_ **$name** (_default_: None)
+  - > _mixed_ **$value** (_default_: None)
+- `onHeaders()` Вызываемый объект, который вызывается, когда HTTP-заголовки ответа получены, но тело еще не начало загружаться.
+  - > _callable_ **$callback** (_default_: None)
+    - > _Response_ **$response** (_default_: Response)
+- `expect()` Управляет поведением заголовка «Expect: 100-Continue».
+  - > _integer|boolean_ **$rule** (_default_: 1048576)
+
+### <a name="Http-Option"></a> Http
+- `setVersion()` Установить версию протокола
+  - > _integer|float_ **$version** (_default_: 1.1)
+- `stream()` Установить потоковою передачу ответа, а не для загрузки сразу
+  - > _boolean_ **$status** (_default_: false)
+- `idnConversion()` Поддержка интернационализированных доменных имен (IDN) (включена по умолчанию, если `intl` расширение доступно).
+  - > _integer|boolean_ **$support** (_default_: true or false)
+- `httpExceptions()` Выдача исключений по **HTTP-code**
+  - > _boolean_ **$status** (_default_: true)
+- `ipVersion()` Установить версию IP
+  - > _string_ **$version** (_default_: None)
+- `stats()` Позволяет получить доступ к статистике передачи запроса и доступ к деталям передачи нижнего уровня обработчика, связанного с вашим клиентом.
+  - > _callable_ **$callback** (_default_: None)
+    - > _TransferStats_ **$stats** (_default_: TransferStats)
+- `sync()` Сообщить обработчикам HTTP, что вы собираетесь ожидать ответ. Это может быть полезно для оптимизации
+  - > _boolean_ **$status** (_default_: None)
+
+### <a name="Progress-Option"></a> Progress
+- `progress()` Определяет функцию, вызываемую при выполнении передачи.
+  - > _callable_ **$callback** (_default_: None)
+    - > _integer_ **$downloadTotal** (_default_: 0) - общее количество байтов, ожидаемых к загрузке, ноль, если неизвестно
+    - > _integer_ **$downloadedBytes** (_default_: 0) - количество байтов, загруженных на данный момент
+    - > _integer_ **$uploadTotal** (_default_: 0) - общее количество байтов, которые должны быть загружены
+    - > _integer_ **$uploadedBytes** (_default_: 0) - количество байтов, загруженных на данный момент
 
 ### Отправка запроса
 ```php
