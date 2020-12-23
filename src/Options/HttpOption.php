@@ -91,6 +91,34 @@ class HttpOption extends Invoke implements OptionInterface
     }
 
     /**
+     * @param callable $callback
+     *
+     * @return $this
+     */
+    public function stats(callable $callback): HttpOption
+    {
+
+        $this->readyData['on_stats'] = $callback;
+
+        return $this;
+
+    }
+
+    /**
+     * @param bool $status
+     *
+     * @return $this
+     */
+    public function sync(bool $status): HttpOption
+    {
+
+        $this->readyData['synchronous'] = $status;
+
+        return $this;
+
+    }
+
+    /**
      * @param HttpRequest $request
      * @param Response    $response
      *
@@ -99,7 +127,7 @@ class HttpOption extends Invoke implements OptionInterface
     protected function call(HttpRequest $request, Response $response): array
     {
 
-        return [];
+        return $this->readyData;
 
     }
 

@@ -20,6 +20,9 @@ composer require codememory/http-screw
     - [SSL Cert](#SSL-Cert-Option)
     - [ProxyOption](#Proxy-Option)
     - [ParamsOption](#Params-Option)
+    - [HeadersOption](#Headers-Option)
+    - [HttpOption](#Http-Option)
+    - [ProgressOption](#Progress-Option)
 - #### [Request Методы](#Request-Method)
 - #### [Response Методы](#Response-Method)
 
@@ -158,6 +161,43 @@ composer require codememory/http-screw
   - > _mixed **NOT** null_ **$contents** (_default_: None) - Данные для использования в элементе формы.
   - > _?string_ **$filename** (_default_: Null)
   - > _?array_ **$headers** (_default_: [])  
+
+### <a name="Headers-Option"></a> Headers
+- `decodeContent(): HeadersOption` Укажите, будут ли `Content-Encoding` ответы (gzip, deflate и т. Д.) Автоматически декодироваться.
+  - > _string|boolean_ **$decode** (_default_: true)
+- `header()` Добавить заголовок
+  - > _string_ **$name** (_default_: None)
+  - > _mixed_ **$value** (_default_: None)
+- `onHeaders()` Вызываемый объект, который вызывается, когда HTTP-заголовки ответа получены, но тело еще не начало загружаться.
+  - > _callable_ **$callback** (_default_: None)
+    - > _Response_ **$response** (_default_: Response)
+- `expect()` Управляет поведением заголовка «Expect: 100-Continue».
+  - > _integer|boolean_ **$rule** (_default_: 1048576)
+
+### <a name="Http-Option"></a> Http
+- `setVersion()` Установить версию протокола
+  - > _integer|float_ **$version** (_default_: 1.1)
+- `stream()` Установить потоковою передачу ответа, а не для загрузки сразу
+  - > _boolean_ **$status** (_default_: false)
+- `idnConversion()` Поддержка интернационализированных доменных имен (IDN) (включена по умолчанию, если `intl` расширение доступно).
+  - > _integer|boolean_ **$support** (_default_: true or false)
+- `httpExceptions()` Выдача исключений по **HTTP-code**
+  - > _boolean_ **$status** (_default_: true)
+- `ipVersion()` Установить версию IP
+  - > _string_ **$version** (_default_: None)
+- `stats()` Позволяет получить доступ к статистике передачи запроса и доступ к деталям передачи нижнего уровня обработчика, связанного с вашим клиентом.
+  - > _callable_ **$callback** (_default_: None)
+    - > _TransferStats_ **$stats** (_default_: TransferStats)
+- `sync()` Сообщить обработчикам HTTP, что вы собираетесь ожидать ответ. Это может быть полезно для оптимизации
+  - > _boolean_ **$status** (_default_: None)
+
+### <a name="Progress-Option"></a> Progress
+- `progress()` Определяет функцию, вызываемую при выполнении передачи.
+  - > _callable_ **$callback** (_default_: None)
+    - > _integer_ **$downloadTotal** (_default_: 0) - общее количество байтов, ожидаемых к загрузке, ноль, если неизвестно
+    - > _integer_ **$downloadedBytes** (_default_: 0) - количество байтов, загруженных на данный момент
+    - > _integer_ **$uploadTotal** (_default_: 0) - общее количество байтов, которые должны быть загружены
+    - > _integer_ **$uploadedBytes** (_default_: 0) - количество байтов, загруженных на данный момент
 
 ### Отправка запроса
 ```php

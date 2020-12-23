@@ -74,6 +74,20 @@ class HeadersOption extends Invoke implements OptionInterface
     }
 
     /**
+     * @param int|bool $rule
+     *
+     * @return HeadersOption
+     */
+    public function expect($rule): HeadersOption
+    {
+
+        $this->readyData['expect'] = $rule;
+
+        return $this;
+
+    }
+
+    /**
      * @param HttpRequest $request
      * @param Response    $response
      *
