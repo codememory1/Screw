@@ -71,7 +71,7 @@ class Response extends Handler
     /**
      * @return mixed
      */
-    public function getResponseBody()
+    public function getBody()
     {
 
         return $this->responseHandler(
@@ -85,7 +85,7 @@ class Response extends Handler
     /**
      * @return int
      */
-    public function getResponseCode(): int
+    public function getHttpCode(): int
     {
 
         return $this->request
@@ -102,6 +102,19 @@ class Response extends Handler
 
         return $this->request
             ->response();
+
+    }
+
+    /**
+     * @param string $method
+     * @param        $args
+     *
+     * @return mixed
+     */
+    public function __call(string $method, $args)
+    {
+
+        return $this->request->response()->$method(...$args);
 
     }
 
