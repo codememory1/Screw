@@ -199,6 +199,19 @@ composer require codememory/http-screw
     - > _integer_ **$uploadTotal** (_default_: 0) - общее количество байтов, которые должны быть загружены
     - > _integer_ **$uploadedBytes** (_default_: 0) - количество байтов, загруженных на данный момент
 
+### <a name="Response-Method"></a> Response Методы
+- `responseType()` Преоброзовать ответ Body в ТИП:
+  - > _integer_ **$type** (_default_: String(4))
+      `Response::RESPONSE_JSON`
+      `Response::RESPONSE_ARRAY`
+      `Response::RESPONSE_OBJECT`
+      `Response::RESPONSE_STRING`
+    
+- `getBody()` Получить Body ответа
+- `getHttpCode()` Получить **HTTP-код**
+- `getResponseGuzzle(): GuzzleResponse` Вернуть обьект класса `GuzzleResponse`
+- `__call()` Другие методы из обьекта `GuzzleResponse` **[Подробнее](https://docs.guzzlephp.org/)**
+
 ### Отправка запроса
 ```php
  use Codememory\HttpRequest\Request;

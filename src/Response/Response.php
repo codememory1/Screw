@@ -56,19 +56,6 @@ class Response extends Handler
     }
 
     /**
-     * @param callable $handler
-     * @param int      $code
-     *
-     * @return Response
-     */
-    public function processResponseCode(callable $handler, int $code = 200): Response
-    {
-
-        return $this;
-
-    }
-
-    /**
      * @return mixed
      */
     public function getBody()
@@ -114,7 +101,7 @@ class Response extends Handler
     public function __call(string $method, $args)
     {
 
-        return $this->request->response()->$method(...$args);
+        return $this->getResponseGuzzle()->$method(...$args);
 
     }
 
