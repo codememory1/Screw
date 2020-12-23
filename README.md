@@ -201,7 +201,7 @@ composer require codememory/http-screw
 
 ### <a name="Response-Method"></a> Response Методы
 - `responseType()` Преоброзовать ответ Body в ТИП:
-  - > _integer_ **$type** (_default_: String(4))
+  - > _integer_ **$type** (_default_: String(4)) <br>
       `Response::RESPONSE_JSON` <br>
       `Response::RESPONSE_ARRAY` <br>
       `Response::RESPONSE_OBJECT` <br>
