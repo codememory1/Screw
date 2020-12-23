@@ -201,11 +201,11 @@ composer require codememory/http-screw
 
 ### <a name="Response-Method"></a> Response Методы
 - `responseType()` Преоброзовать ответ Body в ТИП:
-  - > _integer_ **$type** (_default_: String(4))
-      `Response::RESPONSE_JSON`
-      `Response::RESPONSE_ARRAY`
-      `Response::RESPONSE_OBJECT`
-      `Response::RESPONSE_STRING`
+  - > _integer_ **$type** (_default_: String(4)) <br>
+      `Response::RESPONSE_JSON` <br>
+      `Response::RESPONSE_ARRAY` <br>
+      `Response::RESPONSE_OBJECT` <br>
+      `Response::RESPONSE_STRING` <br>
     
 - `getBody()` Получить Body ответа
 - `getHttpCode()` Получить **HTTP-код**
