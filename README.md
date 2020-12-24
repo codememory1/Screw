@@ -232,7 +232,7 @@ composer require codememory/http-screw
  $httpRequest
     ->setUrl('http://example.com/')
     ->setMethod('GET')
-    ->option(Request::O_REDIRECT, function(RedirectOption $redirect):  RedirectOption {
+    ->option(HttpRequest::O_REDIRECT, function(RedirectOption $redirect):  RedirectOption {
         $redirect
             ->redirect(true);
         
@@ -245,14 +245,14 @@ composer require codememory/http-screw
  $httpRequest
     ->setUrl('http://example.com/')
     ->setMethod('GET')
-    ->option(Request::O_REDIRECT, function(RedirectOption $redirect): RedirectOption {
+    ->option(HttpRequest::O_REDIRECT, function(RedirectOption $redirect): RedirectOption {
         $redirect
             ->redirect(true)
             ->allowProtocols('http'); 
             
         return $redirect;
     })
-    ->option(Request::TIMEOUT, function(TimeoutOption $timeout): TimeoutOption {
+    ->option(HttpRequest::TIMEOUT, function(TimeoutOption $timeout): TimeoutOption {
         $timeout
             ->delay(4)
             ->requestTime(5);
