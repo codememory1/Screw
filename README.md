@@ -218,9 +218,9 @@ composer require codememory/http-screw
 
 ### Отправка запроса
 ```php
- use Codememory\HttpRequest\Request;
+ use Codememory\Screw\HttpRequest;
 
- $httpRequest = new Request();
+ $httpRequest = new HttpRequest();
  
  $response = $httpRequest
         ->setUrl('http://example.com/') // Url запроса
