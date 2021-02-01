@@ -87,7 +87,7 @@ class ParamsOption extends Invoke implements OptionInterface
      */
     protected function call(HttpRequest $request, Response $response): array
     {
-dd($this->readyData);
+
         return $this->readyData;
 
     }
